@@ -1,0 +1,67 @@
+enable
+
+
+erase start
+
+
+
+
+
+
+configure terminal
+
+hostname R_1
+
+
+enable secret 123
+username cisco privilege 15 secret 123
+
+line console 0
+login local
+logging synchronous
+exit
+
+line vty 0 4
+login local
+logging synchronous
+exit
+
+
+
+ip routing
+
+interface S0/1/0
+ip address 192.168.1.2 255.255.255.0
+no shutdown
+exit
+
+interface G0/0/0.10
+encapsulation dot1Q 10
+ip address 192.168.12.1 255.255.255.0
+Description Gatewat de la vlan 10
+exit
+
+interface G0/0/0.20
+encapsulation dot1Q 20
+ip address 192.168.22.1 255.255.255.0
+Description Gatewat de la vlan 20
+exit
+
+interface G0/0/0.99
+encapsulation dot1Q 99
+ip address 192.168.92.1 255.255.255.0
+Description Gatewat de la vlan 99
+exit
+
+interface G0/0/0
+no shutdown
+exit
+
+ip route 192.168.11.0 255.255.255.0 192.168.1.1
+ip route 192.168.21.0 255.255.255.0 192.168.1.1
+
+end 
+
+
+
+wr

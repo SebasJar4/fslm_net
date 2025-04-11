@@ -1,0 +1,104 @@
+enable
+
+
+erase start
+
+
+
+
+
+
+configure terminal
+
+hostname SW3_1
+
+
+enable secret 123
+username cisco privilege 15 secret 123
+
+line console 0
+login local
+logging synchronous
+exit
+
+line vty 0 4
+login local
+logging synchronous
+exit
+
+
+
+
+vlan 10
+name Estudiantes
+exit
+
+vlan 20
+name Docentes
+exit
+
+vlan 99
+name Manager
+exit
+
+vlan 100
+name Agujero_negro
+exit
+
+interface vlan 10
+ip address 192.168.12.2 255.255.255.0
+Description Regula el flujo de la vlan 10
+no shutdown
+exit
+
+interface vlan 20
+ip address 192.168.22.2 255.255.255.0
+Description Regula el flujo de la vlan 20
+no shutdown
+exit
+
+interface vlan 99
+ip address 192.168.92.2 255.255.255.0
+Description Regula el flujo de la vlan 99
+no shutdown
+exit
+
+interface range G1/0/1
+switchport mode trunk
+switchport trunk native vlan 99
+switchport trunk allowed vlan 10,20,99
+no shutdown
+exit
+
+
+interface range G1/0/2
+switchport mode trunk
+switchport trunk native vlan 99
+switchport trunk allowed vlan 10,20,99
+no shutdown
+exit
+
+
+interface G1/0/1
+Description Conecta con el R_0 en modo trunk
+exit
+interface G1/0/2
+Description Conecta con el SW2_0 en modo trunk
+exit
+
+
+
+interface range G1/0/3-24,G1/1/1-4
+switchport mode access
+switchport access vlan 100
+Description Puerto inactivo
+shutdown
+exit
+
+no vlan 100 
+
+end
+
+wr
+
+
